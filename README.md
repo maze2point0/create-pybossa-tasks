@@ -17,7 +17,7 @@ How to use the script grid.py:
 	- device orientation: "landscape" or "portrait"
 
 Constraints:
-- python packages ogr, osr
+- requires python packages ogr, osr
 - supported input file formats: .shp, .kml, .geojson
 - input file projection: EPGS 4326 (WGS 84)
 - only one geometry per input file supported right now, if you have an input file with two geometries only the first will be used for the calculation
