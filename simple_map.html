@@ -1,0 +1,49 @@
+
+<head>
+<link rel="stylesheet" href="http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/leaflet.css" />
+<script src="http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/leaflet.js"></script>
+<script src="http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/omnivore.js"></script>
+<script src="http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/Bing.js"></script>
+
+<script>
+function show_map(){
+    console.log("map should be shown");
+    
+  var wkt = "POLYGON ((13.4561898 52.529611774117711 0,13.458764720654298 52.529611774117711 0,13.458764720654298 52.52752328580889 0,13.4561898 52.52752328580889 0,13.4561898 52.529611774117711 0))"
+  
+	
+	
+	if (typeof l_map !== 'undefined') {
+    // the variable is defined
+	l_map.remove()
+	}
+    
+	l_map = L.map('leaflet_map', {
+		zoom: 18,
+		minZoom: 18,
+		maxZoom: 18,
+		zoomControl: false
+	});
+	
+	//L.control.scale().addTo(l_map);
+	
+	var tileLayer = new L.BingLayer('AopsdXjtTu-IwNoCTiZBtgRJ1g7yPkzAi65nXplc-eLJwZHYlAIf2yuSY_Kjg3Wn', {type: 'Aerial'});
+	
+	l_map.addLayer(tileLayer);
+	
+	grid_feature = omnivore.wkt.parse(wkt);
+	grid_feature.addTo(l_map);
+	l_map.fitBounds(grid_feature)
+	grid_feature.setStyle({opacity: 0.5, fill: false})
+}
+</script>
+</head>
+
+<body onload="show_map()">
+<h1 id="question">Can you see settlements or roads in the satellite imagery?</h1>
+
+
+<div onload="show_map()" class="main" id="leaflet_map" style="background-color:grey;height:640px; width:480px"></div>
+</body>
+
+
