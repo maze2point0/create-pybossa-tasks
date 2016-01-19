@@ -22,6 +22,8 @@ Constraints:
 - input file projection: EPGS 4326 (WGS 84)
 - only one geometry per input file supported right now, if you have an input file with two geometries only the first will be used for the calculation
 
-To test your results you may use the file simple_map.html.
-- For doing so change the geometry in line 12, e.g. copy and paste a single geometry from the output .csv file.
-- Furthermore adjust the height and width of the map in line 46, so that they fit to the height and width you specified before.
+Test your results:
+- adjust the file "simple_map.html"
+- change the geometry in line 12, e.g. copy and paste a single geometry from the output .csv file
+- adjust the height and width of the map in line 46, so that they fit to the height and width you specified before
+- open the file in your webbrowser
