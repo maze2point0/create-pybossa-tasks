@@ -7,13 +7,13 @@ import os, sys
 from math import ceil
 import math
 
-def main(infile, zoomlevel, dev_resolution, dev_orientation):
+def main(infile, zoomlevel, dev_height, dev_width):
 	try:
 		from osgeo import ogr, osr
 		print 'Import of ogr and osr from osgeo worked.  Hurray!\n'
 	except:
 		print '############ ERROR ######################################'
-		print '## Import of ogr, osr from osgeo failed\n\n'
+		print '## Import of ogr from osgeo failed\n\n'
 		print '#########################################################'
 		sys.exit()
 	
@@ -69,21 +69,6 @@ def main(infile, zoomlevel, dev_resolution, dev_orientation):
 
 	# get Zoomlevel
 	zoomlevel = float(zoomlevel)
-	
-	# get device characteristics
-	dev_resolution = dev_resolution.split('x')
-	if (float(dev_resolution[0]) > dev_resolution[1]) and dev_orientation == 'portrait' :
-		dev_height = dev_resolution[0]
-		dev_width = dev_resolution[1]
-	if (float(dev_resolution[0]) < dev_resolution[1]) and dev_orientation == 'portrait' :
-		dev_height = dev_resolution[1]
-		dev_width = dev_resolution[0]
-	if (float(dev_resolution[0]) > dev_resolution[1]) and dev_orientation == 'landscape' :
-		dev_height = dev_resolution[1]
-		dev_width = dev_resolution[0]
-	if (float(dev_resolution[0]) < dev_resolution[1]) and dev_orientation == 'landscape' :
-		dev_height = dev_resolution[0]
-		dev_width = dev_resolution[1]
 	
 	# Calculate GridWidth and GridHeight from given inputs
 	ground_resolution = (math.cos(y_average*math.pi/180)*360)/(256*math.pow(2,zoomlevel))	
@@ -186,11 +171,11 @@ def main(infile, zoomlevel, dev_resolution, dev_orientation):
 if __name__ == "__main__":
 
     #
-    # example run : $ python grid.py polygon.shp 18 480x640 landscape
+    # example run : $ python grid.py polygon.shp 18 480 640
     #
 
     if len( sys.argv ) != 5: 
-        print "[ ERROR ] you must supply four arguments: input-shapefile-name.shp zoomlevel device_resolution device_orientation"
+        print "[ ERROR ] you must supply four arguments: input-shapefile-name.shp zoomlevel device_height device_width"
         sys.exit( 1 )
 
     main( sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4] )
