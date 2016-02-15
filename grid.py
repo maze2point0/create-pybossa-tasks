@@ -131,7 +131,7 @@ def main(infile, zoomlevel, dev_height, dev_width):
 			if intersect == True:
 				l = l+1
 				o_line = poly.ExportToWkt()
-				fileobj_output.write(str(l)+';'+o_line+';'+';'+str(zoomlevel)+';'+str(dev_height)+';'+str(dev_width)+'\n')
+				fileobj_output.write(str(l)+';'+o_line+';'+str(zoomlevel)+';'+str(dev_height)+';'+str(dev_width)+'\n')
 				
 				outFeature = ogr.Feature(featureDefn)
 				outFeature.SetGeometry(poly)
