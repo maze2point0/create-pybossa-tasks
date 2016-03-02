@@ -107,7 +107,7 @@ def main(infile, width, height, zoomlevel):
 	if os.path.exists(outfile):
 		os.remove(outfile)
 	fileobj_output = file(outfile,'w')
-	fileobj_output.write('id;wkt;width;height\n')
+	fileobj_output.write('id;wkt;zoomlevel;width;height\n')
 
 	outDriver = driver
 	if os.path.exists(outputGridfn):
@@ -170,7 +170,7 @@ def main(infile, width, height, zoomlevel):
 			if intersect == True:
 				l = l+1
 				o_line = poly.ExportToWkt()
-				fileobj_output.write(str(l)+';'+o_line+';'+width+';'+height+'\n')
+				fileobj_output.write(str(l)+';'+o_line+';'+zoomlevel+';'+width+';'+height+'\n')
 				
 				outFeature = ogr.Feature(featureDefn)
 				outFeature.SetGeometry(poly)
