@@ -24,13 +24,6 @@ Constraints:
 - input file projection: EPGS 4326 (WGS 84)
 
 
-Test your results:
-- adjust the file "simple_map.html"
-- change the geometry in line 12, e.g. copy and paste a single geometry from the output .csv file
-- adjust the height and width of the map in line 46, so that they fit to the height and width you specified before
-- open the file in your webbrowser
-
-
 # create_tiles_grid.py
 - get geometry of all tiles that intersect with input file, area of interest
 - two output files: e.g. polygon_tiles_grid.shp (for use in your GIS) and polygon_tiles_grid.csv
@@ -66,3 +59,11 @@ Constraints:
 - supported input file formats: .shp, .kml, .geojson, .csv
 - input file projection: EPGS 4326 (WGS 84)
 - requires file 'api_key.txt' with (BingMaps) api key in the same directory 
+
+
+
+# Test your results:
+- adjust the file "simple_map.html"
+- change the geometry in line 12, e.g. copy and paste a single geometry from your output .csv file
+- (adjust the height and width of the map in line 46, so that they fit to the height and width you specified before)
+- open the file in your webbrowser
