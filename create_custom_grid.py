@@ -1,4 +1,4 @@
-﻿#!/bin/python
+#!/bin/python
 # -*- coding: UTF-8 -*-
 # Author: B. Herfort, 2016
 ###########################################
@@ -37,7 +37,7 @@ def pixel_coords_to_tile_address(x,y):
     return t
 
 
-def main(infile, width, height, zoomlevel):
+def main(infile, width, height, zoom):
 	try:
 		from osgeo import ogr, osr
 		print 'Import of ogr and osr from osgeo worked.  Hurray!\n'
@@ -91,13 +91,15 @@ def main(infile, width, height, zoomlevel):
 	ymax = extent[3]
 	
 	
+	
 	# get feature geometry of all features of the input file
 	geomcol = ogr.Geometry(ogr.wkbGeometryCollection)
 	for feature in layer:
 		geomcol.AddGeometry(feature.GetGeometryRef())
 
+
 	# get Zoomlevel
-	zoom = float(zoomlevel)
+	zoom = float(zoom)
 	
 	# create output file
 	outputGridfn = infile_name + '_grid.' + infile_extension
@@ -107,7 +109,7 @@ def main(infile, width, height, zoomlevel):
 	if os.path.exists(outfile):
 		os.remove(outfile)
 	fileobj_output = file(outfile,'w')
-	fileobj_output.write('id;wkt;zoomlevel;width;height\n')
+	fileobj_output.write('id;wkt;width;height;zoom\n')
 
 	outDriver = driver
 	if os.path.exists(outputGridfn):
@@ -116,6 +118,13 @@ def main(infile, width, height, zoomlevel):
 	outLayer = outDataSource.CreateLayer(outputGridfn,geom_type=ogr.wkbPolygon )
 	featureDefn = outLayer.GetLayerDefn()
 	
+	# create fields for width, height, zoom
+	width_field = ogr.FieldDefn('width',ogr.OFTInteger)
+	outLayer.CreateField(width_field)
+	height_field = ogr.FieldDefn('height',ogr.OFTInteger)
+	outLayer.CreateField(height_field)
+	zoom_field = ogr.FieldDefn('zoom',ogr.OFTInteger)
+	outLayer.CreateField(zoom_field)
 	
 	# get upper left pixel coordinates
 	pixel = lat_long_zoom_to_pixel_coords(ymax, xmin, zoom)
@@ -140,6 +149,9 @@ def main(infile, width, height, zoomlevel):
 			# Calculate lat, lon of upper left corner of tile
 			PixelX = pixel_left + (j*int(width))
 			PixelY = pixel_top + (i*int(height))
+			
+			
+			
 			MapSize = 256*math.pow(2,zoom)
 			x = (PixelX / MapSize) - 0.5
 			y = 0.5 - (PixelY / MapSize)
@@ -149,6 +161,9 @@ def main(infile, width, height, zoomlevel):
 			# Calculate lat, lon of lower right corner of tile
 			PixelX = pixel_left + ((j+1)*int(width))
 			PixelY = pixel_top + ((i+1)*int(height))
+			
+			
+			
 			MapSize = 256*math.pow(2,zoom)
 			x = (PixelX / MapSize) - 0.5
 			y = 0.5 - (PixelY / MapSize)
@@ -170,10 +185,20 @@ def main(infile, width, height, zoomlevel):
 			if intersect == True:
 				l = l+1
 				o_line = poly.ExportToWkt()
-				fileobj_output.write(str(l)+';'+o_line+';'+zoomlevel+';'+width+';'+height+'\n')
+				fileobj_output.write(str(l-1)+';'+o_line+';'+str(width)+';'+str(height)+';'+str(int(zoom))+'\n')
 				
 				outFeature = ogr.Feature(featureDefn)
 				outFeature.SetGeometry(poly)
+				
+				if infile_extension == 'kml':
+					width_height_zoom = str(width)+'_'+str(height)+'_'+str(int(zoom))
+					outFeature.SetField('name', width_height_zoom)
+					outFeature.SetField('description', 'width_height_zoom')
+				else:
+					outFeature.SetField('width', width)
+					outFeature.SetField('heigt', height)
+					outFeature.SetField('zoom', zoom)
+					
 				outLayer.CreateFeature(outFeature)
 				outFeature.Destroy
 
@@ -185,7 +210,7 @@ def main(infile, width, height, zoomlevel):
 	print '##'
 	print '## input file: '+infile
 	print '##'
-	print '## zoomlevel: '+str(zoomlevel)
+	print '## zoom: '+str(zoom)
 	print '## width: '+width
 	print '## height: '+height
 	print '##'
@@ -205,7 +230,7 @@ if __name__ == "__main__":
     #
 
     if len( sys.argv ) != 5: 
-        print "[ ERROR ] you must supply 4 arguments: input-shapefile-name.shp width height zoomlevel"
+        print "[ ERROR ] you must supply 4 arguments: input-shapefile-name.shp width height zoom"
         sys.exit( 1 )
 
     main( sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4],)
