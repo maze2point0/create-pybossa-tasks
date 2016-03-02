@@ -196,7 +196,7 @@ def main(infile, width, height, zoom):
 					outFeature.SetField('description', 'width_height_zoom')
 				else:
 					outFeature.SetField('width', width)
-					outFeature.SetField('heigt', height)
+					outFeature.SetField('height', height)
 					outFeature.SetField('zoom', zoom)
 					
 				outLayer.CreateFeature(outFeature)
