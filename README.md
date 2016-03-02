@@ -3,7 +3,7 @@ Create tasks ready to use in PyBossa.
 
 # Some basic workflows
 ### Download all tiles for specific area of interest
-1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)!
+1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)! (e.g. here: https://osm.wno-edv-service.de/boundaries/)
 	* result: aoi.shp
 2. Find all tiles that intersect with your area of interest. Specify a zoomlevel. Use the script create_tiles_grid.py. 
 	* input file: aoi.shp
@@ -13,7 +13,7 @@ Create tasks ready to use in PyBossa.
 	* result: many .png files in the output directory you specified
 
 ### Create tiles that fit to a custom resolution
-1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)!
+1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)!  (e.g. here: https://osm.wno-edv-service.de/boundaries/)
 	* result: aoi.shp
 2. Create grids that have your custom resolution and intersect with the area of interest. Specifiy width, height and zoomlevel. Use the script create_custom_grid.py.
 	* input file: aoi.shp
