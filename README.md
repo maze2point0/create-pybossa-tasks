@@ -42,7 +42,7 @@ Create tasks ready to use in PyBossa.
 - polygon_grid.kml contains field 'description' with 'width_height_zoom' as value
 
 How to use the script create_custom_grid.py:
-- example run: python create_custom_grid.py polygon.shp 480 640 18
+- example run: python create_custom_grid.py test_geometry.shp 480 640 18
 - four arguments mandatory:
 	- input file: e.g. polygon.shp, polygon.geojson, polygon.kml
 	- device width in pixel: e.g. 480
@@ -63,7 +63,7 @@ Constraints:
 - polygon_tiles_grid.kml contains field 'description' with 'TileX_TileY_TileZ' as value
 
 How to use the script create_tiles_grid.py:
-- example run: python create_tiles_grid.py polygon.shp 18
+- example run: python create_tiles_grid.py test_geometry.shp 18
 - two arguments mandatory:
 	- input file: e.g. polygon.shp, polygon.geojson, polygon.kml
 	- zoomlevel: 1- 20
@@ -80,7 +80,7 @@ Constraints:
 - requires file 'api_key.txt' with (BingMaps) api key in the same directory!
  
 How to use the script create_tiles_grid.py:
-- example run: python get_tiles.py polygon_tiles_grid.shp tiles_directory
+- example run: python get_tiles.py test_geometry_tiles.shp tiles_directory
 - two arguments mandatory:
 	- input file: e.g. polygon_tiles_grid.shp, polygon_tiles_grid.geojson, polygon_tiles_grid.kml, polygon_tiles_grid.csv
 	- output directory: e.g. directory_path
@@ -100,9 +100,9 @@ Constraints:
 - resulting PNG-file has the same size as specified in the input grid (e.g. 360x480 pixels)
 
 How to use the script stitch_tiles.py:
-- example run: python stitch_tiles.py polygon_grid.shp tiles_directory stitch_directory JPEG
+- example run: python stitch_tiles.py test_geometry_grid.shp tiles_directory stitch_directory JPEG
 - four arguments mandatory:
-	- input file: e.g. polygon_grid.shp, polygon_grid.geojson, polygon_grid.kml
+	- input file: e.g. polygon_grid.shp, test_grid.geojson, polygon_grid.kml
 	- tiles directory: e.g. tiles_directory
 	- stitch directory: e.g. stitch_directory
 	- compression: e.g. JPEG or None (for more information see: http://www.gdal.org/frmt_gtiff.html)
