@@ -4,7 +4,7 @@ Create tasks ready to use in PyBossa.
 
 # create_custom_grid.py
 
-- calculate grid polygons from given input file, area of interes (.shp, .geojson, .kml)
+- calculate grid polygons from given input file, area of interest (.shp, .geojson, .kml)
 - grid polygon size adjusted to specific resolution (e.g. 480x640 pixel)
 - grid polygon size adjusted to specific zoomlevel
 - two output files: e.g. polygon_grid.shp (for use in your GIS) and polygon_grid.csv (to upload in PyBossa)
