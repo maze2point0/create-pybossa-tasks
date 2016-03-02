@@ -1,8 +1,35 @@
 # create-pybossa-tasks
 Create tasks ready to use in PyBossa.
 
+# Some basic workflows
+### Download all tiles for specific area of interest
+1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)!
+	* result: aoi.shp
+2. Find all tiles that intersect with your area of interest. Specify a zoomlevel. Use the script create_tiles_grid.py. 
+	* input file: aoi.shp
+	* result: aoi_tiles_grid.shp
+3. Download all tiles. Specify an output directory. Use the script get_tiles.py.
+	* input file: aoi_tiles_grid.shp
+	* result: many .png files in the output directory you specified
 
-# create_custom_grid.py
+### Create tiles that fit to a custom resolution
+1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)!
+	* result: aoi.shp
+2. Create grids that have your custom resolution and intersect with the area of interest. Specifiy width, height and zoomlevel. Use the script create_custom_grid.py.
+	* input file: aoi.shp
+	* result: aoi_grid.shp
+3. Find all tiles that intersect with your grids. Specify a zoomlevel. Use the script create_tiles_grid.py. 
+	* input file: aoi_grid.shp
+	* result: aoi_grid_tiles_grid.shp
+4. Download all tiles. Specify an output directory. Use the script get_tiles.py.
+	* input file: aoi_grid_tiles_grid.shp
+	* result: many .png files in the output directory you specified
+5. Stitch the tiles together and clip to your grid extent. Specify a directory with the png files of the tiles, an output directory and an compression modus. Use the script stitch_tiles.py.
+	*input file: aoi_grid.shp
+	*result: beautiful .png files that fit to your needs in the output directory you specified
+
+# Scripts
+### create_custom_grid.py
 
 - calculate grid polygons from given input file, area of interest (.shp, .geojson, .kml)
 - grid polygon size adjusted to specific resolution (e.g. 480x640 pixel)
@@ -24,7 +51,7 @@ Constraints:
 - input file projection: EPGS 4326 (WGS 84)
 
 
-# create_tiles_grid.py
+### create_tiles_grid.py
 - get geometry of all tiles that intersect with input file, area of interest
 - two output files: e.g. polygon_tiles_grid.shp (for use in your GIS) and polygon_tiles_grid.csv
 - polygon_tiles_grid.csv contains: id;wkt_geometry;TileX;TileY;TileZ
@@ -42,7 +69,7 @@ Constraints:
 - supported input file formats: .shp, .kml, .geojson
 - input file projection: EPGS 4326 (WGS 84)
 
-# get_tiles.py
+### get_tiles.py
 - download all tiles as .png file for given tiles grid polygon
 - save files to specified output directory
 - check if files are already stored in output directory and will only download tiles that do not exist in the directory (when script exits, e.g. due to connection error, it will start from where it failed and will not download all the tiles again)
@@ -60,7 +87,7 @@ Constraints:
 - input file projection: EPGS 4326 (WGS 84)
 - requires file 'api_key.txt' with (BingMaps) api key in the same directory 
 
-# stitch_tiles.py
+### stitch_tiles.py
 - creates custom PNG-files that fit to input grid
 - find all tiles within one input grid geometry
 - stitch all tiles together
