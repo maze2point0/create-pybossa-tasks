@@ -51,8 +51,8 @@ Constraints:
 
 # get_tiles.py
 - download all tiles as .png file for given tiles grid polygon
-- saves files to specified output directory
-- checks if files are already output directory and will only download tiles that do not exist in the directory (when script exits due to connection error it will start from where it failed and will not download all the tiles again)
+- save files to specified output directory
+- check if files are already output directory and will only download tiles that do not exist in the directory (when script exits due to connection error it will start from where it failed and will not download all the tiles again)
  
 How to use the script create_tiles_grid.py:
 - example run: python get_tiles.py polygon_tiles_grid.shp directory_path
