@@ -3,6 +3,7 @@ Create tasks ready to use in PyBossa.
 
 # Some basic workflows
 - you may use test_geometry.kml for this
+- your results should look like aoi.png, grid.png, tiles_grid.png for zoomlevel=18, width=480, height=640
 
 ### Download all tiles for specific area of interest
 1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)! (e.g. here: https://osm.wno-edv-service.de/boundaries/)
