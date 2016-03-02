@@ -1,4 +1,4 @@
-﻿#!/bin/python
+#!/bin/python
 # -*- coding: UTF-8 -*-
 # Author: B. Herfort, 2016
 ###########################################
