@@ -119,7 +119,11 @@ def main(infile,outDirectory):
 			
 		
 		local_file = outDirectory + '/' + str(TileX)+'_'+str(TileY)+'_'+str(TileZ)+'.png'
-		urllib.urlretrieve(tile_url, local_file)
+		# Check if file already exists
+		if os.path.exists(local_file):
+			continue
+		else:
+			urllib.urlretrieve(tile_url, local_file)
 		
 		progress = round(100*float(i+1)/float(num_features),2)
 		sys.stdout.write('Saved files: '+str(i+1)+' (progress: '+str(progress)+'%)'+'\r')
