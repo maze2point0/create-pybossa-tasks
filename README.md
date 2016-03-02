@@ -65,3 +65,4 @@ Constraints:
 - input file must be in a format according to the result of the script create_tiles_grid.py
 - supported input file formats: .shp, .kml, .geojson, .csv
 - input file projection: EPGS 4326 (WGS 84)
+- requires file 'api_key.txt' with (BingMaps) api key in the same directory 
