@@ -2,30 +2,66 @@
 Create tasks ready to use in PyBossa.
 
 
-Update: Use create_custom_grid.py instead of grid.py.
-What does create_custom_grid.py:
-- calculate grid polygons from given input geometry
+# create_custom_grid.py
+
+- calculate grid polygons from given input file, area of interes (.shp, .geojson, .kml)
 - grid polygon size adjusted to specific resolution (e.g. 480x640 pixel)
 - grid polygon size adjusted to specific zoomlevel
 - two output files: e.g. polygon_grid.shp (for use in your GIS) and polygon_grid.csv (to upload in PyBossa)
-- polygon_grid.csv contains: id;wkt_geometry;zoomlevel;dev_height;dev_width
+- polygon_grid.csv contains: id;wkt_geometry;zoomlevel;width;height
 
 How to use the script create_custom_grid.py:
-- example run: python create_custom_grid.py polygon.shp 18 640 480
-- for arguments mandatory:
+- example run: python create_custom_grid.py polygon.shp 18 480 640
+- four arguments mandatory:
 	- input file: e.g. polygon.shp, polygon.geojson, polygon.kml
 	- zoomlevel: 1- 20
-	- device height in pixel: e.g. 640
 	- device width in pixel: e.g. 480
+	- device height in pixel: e.g. 640
 
 Constraints:
 - requires python packages ogr, osr
 - supported input file formats: .shp, .kml, .geojson
 - input file projection: EPGS 4326 (WGS 84)
-- only one geometry per input file supported right now, if you have an input file with two geometries only the first will be used for the calculation
+
 
 Test your results:
 - adjust the file "simple_map.html"
 - change the geometry in line 12, e.g. copy and paste a single geometry from the output .csv file
 - adjust the height and width of the map in line 46, so that they fit to the height and width you specified before
 - open the file in your webbrowser
+
+
+# create_tiles_grid.py
+- get geometry of all tiles that intersect with input file, area of interest
+- two output files: e.g. polygon_tiles_grid.shp (for use in your GIS) and polygon_tiles_grid.csv
+- polygon_tiles_grid.csv contains: id;wkt_geometry;TileX;TileY;TileZ
+- polygon_tiles_grid.shp and polygon_tiles_grid.geojson contain fields 'TileX', 'TileY', 'TileZ'
+- polygon_tiles_grid.kml contains field 'description' with 'TileX_TileY_TileZ' as value
+
+How to use the script create_tiles_grid.py:
+- example run: python create_tiles_grid.py polygon.shp 18
+- two arguments mandatory:
+	- input file: e.g. polygon.shp, polygon.geojson, polygon.kml
+	- zoomlevel: 1- 20
+
+Constraints:
+- requires python packages ogr, osr
+- supported input file formats: .shp, .kml, .geojson
+- input file projection: EPGS 4326 (WGS 84)
+
+# get_tiles.py
+- download all tiles as .png file for given tiles grid polygon
+- saves files to specified output directory
+- checks if files are already output directory and will only download tiles that do not exist in the directory (when script exits due to connection error it will start from where it failed and will not download all the tiles again)
+ 
+How to use the script create_tiles_grid.py:
+- example run: python get_tiles.py polygon_tiles_grid.shp directory_path
+- two arguments mandatory:
+	- input file: e.g. polygon_tiles_grid.shp, polygon_tiles_grid.geojson, polygon_tiles_grid.kml, polygon_tiles_grid.csv
+	- output directory: e.g. directory_path
+	
+Constraints:
+- requires python packages ogr, osr, urllib, numpy
+- input file must be in a format according to the result of the script create_tiles_grid.py
+- supported input file formats: .shp, .kml, .geojson, .csv
+- input file projection: EPGS 4326 (WGS 84)
