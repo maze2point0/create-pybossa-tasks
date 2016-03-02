@@ -48,7 +48,7 @@ Constraints:
 - check if files are already stored in output directory and will only download tiles that do not exist in the directory (when script exits, e.g. due to connection error, it will start from where it failed and will not download all the tiles again)
  
 How to use the script create_tiles_grid.py:
-- example run: python get_tiles.py polygon_tiles_grid.shp directory_path
+- example run: python get_tiles.py polygon_tiles_grid.shp tiles_directory
 - two arguments mandatory:
 	- input file: e.g. polygon_tiles_grid.shp, polygon_tiles_grid.geojson, polygon_tiles_grid.kml, polygon_tiles_grid.csv
 	- output directory: e.g. directory_path
@@ -60,7 +60,23 @@ Constraints:
 - input file projection: EPGS 4326 (WGS 84)
 - requires file 'api_key.txt' with (BingMaps) api key in the same directory 
 
+# stitch_tiles.py
+- creates custom PNG-files that fit to input grid
+- find all tiles within one input grid geometry
+- stitch all tiles together
+- extract pixels that intersect with input grid geometry
+- resulting PNG-file has the same size as specified in the input grid (e.g. 360x480 pixels)
 
+How to use the script stitch_tiles.py:
+- example run: python stitch_tiles.py polygon_grid.shp tiles_directory stitch_directory JPEG
+- four arguments mandatory:
+	- input file: e.g. polygon_grid.shp, polygon_grid.geojson, polygon_grid.kml
+	- tiles directory: e.g. tiles_directory
+	- stitch directory: e.g. stitch_directory
+	- compression: e.g. JPEG or None (for more information see: http://www.gdal.org/frmt_gtiff.html)
+
+Constraints:
+- ...
 
 # Test your results:
 - adjust the file "simple_map.html"
