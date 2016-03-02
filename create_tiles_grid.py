@@ -1,7 +1,7 @@
-﻿#!/bin/python
+#!/bin/python
 # -*- coding: UTF-8 -*-
 # Author: B. Herfort, 2016
-###########################################
+############################################
 
 import os, sys
 from math import ceil
