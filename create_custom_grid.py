@@ -186,6 +186,8 @@ def main(infile, width, height, zoomlevel):
 	print '## input file: '+infile
 	print '##'
 	print '## zoomlevel: '+str(zoomlevel)
+	print '## width: '+width
+	print '## height: '+height
 	print '##'
 	print '## output files:'
 	print '##      '+outputGridfn
