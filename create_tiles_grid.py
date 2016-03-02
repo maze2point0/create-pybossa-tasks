@@ -91,9 +91,10 @@ def main(infile, zoomlevel):
 	ymax = extent[3]
 	
 	
-	# get feature geometry
-	input_feature= layer.GetFeature(0)
-	in_geometry= input_feature.GetGeometryRef()
+	# get feature geometry of all features of the input file
+	geomcol = ogr.Geometry(ogr.wkbGeometryCollection)
+	for feature in layer:
+		geomcol.AddGeometry(feature.GetGeometryRef())
 
 	# get Zoomlevel
 	zoom = float(zoomlevel)
@@ -170,7 +171,7 @@ def main(infile, zoomlevel):
 			poly.AddGeometry(ring)
 
 			# add new geom to layer
-			intersect = in_geometry.Intersect(poly)
+			intersect = geomcol.Intersect(poly)
 			if intersect == True:
 				l = l+1
 				o_line = poly.ExportToWkt()
