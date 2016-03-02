@@ -38,6 +38,8 @@ Create tasks ready to use in PyBossa.
 - grid polygon size adjusted to specific zoomlevel
 - two output files: e.g. polygon_grid.shp (for use in your GIS) and polygon_grid.csv (to upload in PyBossa)
 - polygon_grid.csv contains: id;wkt_geometry;zoomlevel;width;height
+- polygon_grid.shp and polygon_tiles_grid.geojson contain fields 'width', 'height', 'zoom'
+- polygon_grid.kml contains field 'description' with 'width_height_zoom' as value
 
 How to use the script create_custom_grid.py:
 - example run: python create_custom_grid.py polygon.shp 480 640 18
