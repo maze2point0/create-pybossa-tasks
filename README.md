@@ -38,12 +38,12 @@ Create tasks ready to use in PyBossa.
 - polygon_grid.csv contains: id;wkt_geometry;zoomlevel;width;height
 
 How to use the script create_custom_grid.py:
-- example run: python create_custom_grid.py polygon.shp 18 480 640
+- example run: python create_custom_grid.py polygon.shp 480 640 18
 - four arguments mandatory:
 	- input file: e.g. polygon.shp, polygon.geojson, polygon.kml
-	- zoomlevel: 1- 20
 	- device width in pixel: e.g. 480
 	- device height in pixel: e.g. 640
+	- zoomlevel: 1- 20
 
 Constraints:
 - requires python packages ogr, osr
