@@ -118,7 +118,7 @@ def main(infile,outDirectory):
 			#print "\nThe tile URL is: {}".format(tile_url)
 			
 		
-		local_file = outDirectory + '/' + str(TileX)+'_'+str(TileY)+'_'+str(TileZ)+'.png'
+		local_file = outDirectory + '/' + str(TileX)+'_'+str(TileY)+'_'+str(TileZ)+'.jpeg'
 		# Check if file already exists
 		if os.path.exists(local_file):
 			continue
