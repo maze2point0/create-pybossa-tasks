@@ -137,7 +137,7 @@ def main(infile, tiles_dir, outDirectory, compression):#, tiles_dir, Outdir):
 		for TileY in range(TileY_top,TileY_bottom+1):
 			for TileX in range(TileX_left,TileX_right+1):
 				
-				tile_file = tiles_dir + '/' + str(TileX)+'_'+str(TileY)+'_'+str(zoom)+'.png'
+				tile_file = tiles_dir + '/' + str(TileX)+'_'+str(TileY)+'_'+str(zoom)+'.jpeg'
 				
 				# Read tile_file and save as array
 				ds= gdal.Open( tile_file )
