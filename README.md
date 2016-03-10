@@ -75,7 +75,7 @@ Constraints:
 - input file projection: EPGS 4326 (WGS 84)
 
 ### get_tiles.py
-- download all tiles as .png file for given tiles grid polygon
+- download all tiles as .jpeg file for given tiles grid polygon
 - save files to specified output directory
 - check if files are already stored in output directory and will only download tiles that do not exist in the directory (when script exits, e.g. due to connection error, it will start from where it failed and will not download all the tiles again)
 - requires file 'api_key.txt' with (BingMaps) api key in the same directory!
@@ -94,11 +94,11 @@ Constraints:
 - requires file 'api_key.txt' with (BingMaps) api key in the same directory 
 
 ### stitch_tiles.py
-- creates custom PNG-files that fit to input grid
+- creates custom JPEG-files that fit to input grid
 - find all tiles within one input grid geometry
 - stitch all tiles together
 - extract pixels that intersect with input grid geometry
-- resulting PNG-file has the same size as specified in the input grid (e.g. 360x480 pixels)
+- resulting JPEG-file has the same size as specified in the input grid (e.g. 360x480 pixels)
 
 How to use the script stitch_tiles.py:
 - example run: python stitch_tiles.py test_geometry_grid.shp tiles_directory stitch_directory JPEG
