@@ -26,10 +26,10 @@ Create tasks ready to use in PyBossa.
 	* result: aoi_grid_tiles_grid.shp
 4. Download all tiles. Specify an output directory. Use the script get_tiles.py.
 	* input file: aoi_grid_tiles_grid.shp
-	* result: many .png files in the output directory you specified
+	* result: many .jpeg files in the output directory you specified
 5. Stitch the tiles together and clip to your grid extent. Specify a directory with the png files of the tiles, an output directory and an compression modus. Use the script stitch_tiles.py.
 	* input file: aoi_grid.shp
-	* result: beautiful .png files that fit to your needs in the output directory you specified
+	* result: beautiful .jpeg files that fit to your needs in the output directory you specified
 
 # Scripts
 ### create_custom_grid.py
