@@ -1,5 +1,5 @@
 #!/bin/python
-# -*- coding: UTF-8 -*-
+#
 # Author: B. Herfort, 2016
 ############################################
 
@@ -35,6 +35,25 @@ def pixel_coords_to_tile_address(x,y):
     t.y = int(math.floor(y / 256))
     #print"\nThe tile coordinates are x = {} and y = {}".format(t.x, t.y)
     return t
+
+def tile_coords_and_zoom_to_quadKey(x, y, zoom):
+    quadKey = ''
+    for i in range(zoom, 0, -1):
+        digit = 0
+        mask = 1 << (i - 1)
+        if(x & mask) != 0:
+            digit += 1
+        if(y & mask) != 0:
+            digit += 2
+        quadKey += str(digit)
+    #print "\nThe quadkey is {}".format(quadKey)
+    return quadKey
+
+def quadKey_to_URL(quadKey, api_key):
+    tile_url = ("http://t0.tiles.virtualearth.net/tiles/a{}.jpeg?"
+                "g=854&mkt=en-US&token={}".format(quadKey, api_key))
+    #print "\nThe tile URL is: {}".format(tile_url)
+    return tile_url
 
 
 def main(infile, zoomlevel):
@@ -80,6 +99,15 @@ def main(infile, zoomlevel):
 		print '##'
 		print '#########################################################'
 		sys.exit()
+
+        # Get API key from local text file
+        try:
+            f = open('api_key.txt')
+            api_key = f.read()
+        except:
+            print ("Something is wrong with your API key."
+                   "Do you even have an API key?")
+
 	# Get layer definition
 	layer_defn = layer.GetLayerDefn()
 
@@ -107,7 +135,7 @@ def main(infile, zoomlevel):
 	if os.path.exists(outfile):
 		os.remove(outfile)
 	fileobj_output = file(outfile,'w')
-	fileobj_output.write('id;wkt;TileX;TileY;TileZ\n')
+	fileobj_output.write('id;wkt;TileX;TileY;TileZ;URL\n')
 
 	outDriver = driver
 	if os.path.exists(outputGridfn):
@@ -175,7 +203,10 @@ def main(infile, zoomlevel):
 			if intersect == True:
 				l = l+1
 				o_line = poly.ExportToWkt()
-				fileobj_output.write(str(l)+';'+o_line+';'+str(TileX)+';'+str(TileY)+';'+str(zoomlevel)+'\n')
+                                quadKey = tile_coords_and_zoom_to_quadKey(
+                                    int(TileX),int(TileY),int(zoomlevel))
+                                URL = quadKey_to_URL(quadKey, api_key)
+				fileobj_output.write(str(l)+';'+o_line+';'+str(TileX)+';'+str(TileY)+';'+str(zoomlevel)+';'+ URL +'\n')
 				
 				outFeature = ogr.Feature(featureDefn)
 				outFeature.SetGeometry(poly)
