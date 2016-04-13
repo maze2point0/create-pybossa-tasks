@@ -116,3 +116,29 @@ Constraints:
 - change the geometry in line 12, e.g. copy and paste a single geometry from your output .csv file
 - (adjust the height and width of the map in line 46, so that they fit to the height and width you specified before)
 - open the file in your webbrowser
+
+## Setting this up on a cloud server
+
+Get a cloud server running Ubuntu 14.04 64-bit. Go through the usual securing, updating, and create a user. 
+
+Now you need to install GDAL. First add the UbuntuGIS repository (you need the 'unstable' repo as the stable one is not updated for Ubuntu 14.04:
+
+    sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+    sudo apt-get update
+
+Then install the gdal libraries themselves:
+
+    sudo apt-get install gdal-bin libgdal-dev python-gdal
+
+Now install Git so that you can clone this repo
+
+    sudo apt-get install git
+
+Now grab the repo and change directory into it
+
+    git clone https://github.com/mapswipe/create-pybossa-tasks.git
+    cd create-pybossa-tasks/
+
+You'll need an API key to generate useable URLs for some tile servers. For Bing Maps, for example, follow the instructions on https://msdn.microsoft.com/en-us/library/ff428642.aspx to get a key.  Copy your api key, and place it in a text file called api_key.txt in the create-pybossa-tasks directory.
+
+
