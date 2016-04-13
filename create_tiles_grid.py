@@ -6,6 +6,8 @@
 import os, sys
 from math import ceil
 import math
+import urlparse
+import urllib
 
 class Point:
     def __init__(self, x=0.0, y=0.0):
@@ -66,14 +68,28 @@ def main(infile, zoomlevel):
 		print '#########################################################'
 		sys.exit()
 	
+        # check if the input is a URL, if so, download it
+        parts = urlparse.urlsplit(infile)
+        if parts.scheme:  
+            print('infile is a URL')
+            if not os.path.exists('tmp/'):
+		os.makedirs('tmp')
+            temp_infile = (os.getcwd()) + '/tmp/infile.kml'
+            print(temp_infile)
+            urllib.urlretrieve(infile, temp_infile)
+            print(temp_infile)
+            infile = temp_infile
+            
+        else:
+            print "Infile is not a URL"
+
 	# Get filename and extension
 	try:
 		infile_name = infile.split('.')[0]
 		infile_extension = infile.split('.')[-1]
 	except:
 		print "check input file"
-		sys.exit()
-	
+		sys.exit()	
 
 	# Get the driver --> supported formats: Shapefiles, GeoJSON, kml
 	if infile_extension == 'shp':
@@ -86,7 +102,8 @@ def main(infile, zoomlevel):
 		print 'Check input file format for '+infile
 		print 'Supported formats .shp .geojson .kml'
 		sys.exit()
-	# open the data source
+
+	# open the data source        
 	datasource = driver.Open(infile, 0)
 	try:
 		# Get the data layer
@@ -117,8 +134,7 @@ def main(infile, zoomlevel):
 	xmax = extent[1]
 	ymin = extent[2]
 	ymax = extent[3]
-	
-	
+		
 	# get feature geometry of all features of the input file
 	geomcol = ogr.Geometry(ogr.wkbGeometryCollection)
 	for feature in layer:
@@ -151,6 +167,7 @@ def main(infile, zoomlevel):
 	outLayer.CreateField(TileY_field)
 	TileZ_field = ogr.FieldDefn('TileZ',ogr.OFTInteger)
 	outLayer.CreateField(TileZ_field)
+        URL_field = ogr.FieldDefn('URL' , ogr.OFTString)
 	
 	
 	# get upper left left tile coordinates
@@ -211,13 +228,18 @@ def main(infile, zoomlevel):
 				outFeature = ogr.Feature(featureDefn)
 				outFeature.SetGeometry(poly)
 				if infile_extension == 'kml':
-					col_row_zoom = str(TileX)+'_'+str(TileY)+'_'+str(int(zoom))
-					outFeature.SetField('name', col_row_zoom)
-					outFeature.SetField('description', 'TileX_TileY_TileZ')
+					col_row_zoom = str(
+                                            TileX)+'_'+str(TileY)+'_'+str(int(zoom))
+					outFeature.SetField(
+                                            'name', col_row_zoom)
+                                        desc = str(TileX) + "_" + str(TileY) + "_" + str(int(zoom)) + "\nTile URL: " + URL
+					outFeature.SetField(
+                                            'description', desc)
 				else:
 					outFeature.SetField('TileX', TileX)
 					outFeature.SetField('TileY', TileY)
 					outFeature.SetField('TileZ', zoom)
+                                        outFeature.SetField('URL', URL)
 				outLayer.CreateFeature(outFeature)
 				outFeature.Destroy
 
@@ -247,7 +269,7 @@ if __name__ == "__main__":
     #
 
     if len( sys.argv ) != 3: 
-        print "[ ERROR ] you must supply 2 arguments: input-shapefile-name.shp zoomlevel"
+        print "[ ERROR ] you must supply 2 arguments: (input-shapefile-name.kml or URL pointing to a KML, SHP, or GeoJSON polygon) (zoomlevel)"
         sys.exit( 1 )
 
     main( sys.argv[1], sys.argv[2] )
