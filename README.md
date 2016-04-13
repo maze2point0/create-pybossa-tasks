@@ -117,11 +117,11 @@ Constraints:
 - (adjust the height and width of the map in line 46, so that they fit to the height and width you specified before)
 - open the file in your webbrowser
 
-## Setting this up on a cloud server
+# Setting this up on a cloud server
 
 Get a cloud server running Ubuntu 14.04 64-bit. Go through the usual securing, updating, and create a user. 
 
-Now you need to install GDAL. First add the UbuntuGIS repository (you need the 'unstable' repo as the stable one is not updated for Ubuntu 14.04:
+Now you need to install GDAL. First add the UbuntuGIS repository. You need the 'unstable' repo as the stable one is not updated for Ubuntu 14.04:
 
     sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
     sudo apt-get update
@@ -139,6 +139,6 @@ Now grab the repo and change directory into it
     git clone https://github.com/mapswipe/create-pybossa-tasks.git
     cd create-pybossa-tasks/
 
-You'll need an API key to generate useable URLs for some tile servers. For Bing Maps, for example, follow the instructions on https://msdn.microsoft.com/en-us/library/ff428642.aspx to get a key.  Copy your api key, and place it in a text file called api_key.txt in the create-pybossa-tasks directory.
+You'll need an API key to generate useable URLs for some tile servers. The API key needs to be copied into an otherwise empty text file that the script can read (we're not including API keys in the code because you should get your own, not use ours, which could get us in trouble if you use it in contravention of the tems of service of the tile server)! For Bing Maps, for example, follow the instructions on https://msdn.microsoft.com/en-us/library/ff428642.aspx to get a key.  Copy the text your api key, and place it in am otherwise empty text file called api_key.txt in the create-pybossa-tasks directory.
 
 
