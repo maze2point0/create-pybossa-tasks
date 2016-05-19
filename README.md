@@ -15,6 +15,31 @@ Create tasks ready to use in PyBossa.
 	* input file: aoi_tiles_grid.shp
 	* result: many .png files in the output directory you specified
 
+### Create CSV and KML grid with tile URLs
+
+Use script create_tiles_grid.py
+
+* Takes two arguments:
+  * An input file containing an Areo of Interest polygon
+  * A tile zoom level
+
+For example, you might create a polygon in Google Earth surrounding the area you want to get volunteers to look at, export that polygon as a KML called myArea.kml. Then navigate to the create_pybossa_tasks folder and type the command:
+
+    python create_tiles_grid.py /path/to/myArea.kml 18
+
+A CSV file will be created, containing the fields:
+
+* WKT (Well Known Text): a set of 5 points in lat/long defining the area of each tile
+* TileX (integer): the x-coordinate of the tile, not in lat/long but the ordinal number of the tile column (i.e. 4324 meaning the 4324th column of tiles from the left)
+* TileY (integer): the y-coordinate of the tile (as above)
+* TileZ (integer): the zoom level of the tile (which will be the same as you specified as an input argument)
+* URL: the individual URL of each tile
+* internal-id (integer): a simple counter to help keep track of the tiles in the particular set you've generated (placed at the end and named internal-id to avoid conflicts with unique task IDs in the app's tasking system)
+
+A KML file will also be created showing the tile squares.
+
+The CSV and KML will be created in the same folder as the input AOI file, with "_tiles.csv" and "_tiles.kml" appended to original filename.
+
 ### Create tiles that fit to a custom resolution
 1. Define the area of interest and get a .shp, .geojson, .kml file of it. Infile projection: EPSG 4326 (WGS84)!  (e.g. here: https://osm.wno-edv-service.de/boundaries/)
 	* result: aoi.shp
