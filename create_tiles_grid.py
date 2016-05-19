@@ -151,7 +151,7 @@ def main(infile, zoomlevel):
 	if os.path.exists(outfile):
 		os.remove(outfile)
 	fileobj_output = file(outfile,'w')
-	fileobj_output.write('id;wkt;TileX;TileY;TileZ;URL\n')
+	fileobj_output.write('wkt,TileX,TileY,TileZ,URL,internal-id\n')
 
 	outDriver = driver
 	if os.path.exists(outputGridfn):
@@ -223,7 +223,7 @@ def main(infile, zoomlevel):
                                 quadKey = tile_coords_and_zoom_to_quadKey(
                                     int(TileX),int(TileY),int(zoomlevel))
                                 URL = quadKey_to_URL(quadKey, api_key)
-				fileobj_output.write(str(l)+';'+o_line+';'+str(TileX)+';'+str(TileY)+';'+str(zoomlevel)+';'+ URL +'\n')
+				fileobj_output.write('\"'+o_line+'\",'+str(TileX)+','+str(TileY)+','+str(zoomlevel)+','+ URL + ","+str(l)+'\n')
 				
 				outFeature = ogr.Feature(featureDefn)
 				outFeature.SetGeometry(poly)
